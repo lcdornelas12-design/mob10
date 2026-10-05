@@ -1,0 +1,1702 @@
+<!DOCTYPE html>
+<!-- saved from url=(0049)https://almeida-cma.github.io/mob10/1-tema10.html -->
+<html lang="pt-BR"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>📱 TEMA 10: Da Web ao Mobile — Transformando Aplicações em Aplicativos</title>
+<style>
+  /* ============================================================
+     RESET & BASE - TEMA ESCURO COM DEGRADÊ CYAN/BLUE/SLATE
+     ============================================================ */
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #090d16 0%, #0f172a 50%, #082f49 100%);
+    padding: 20px 14px 80px;
+    min-height: 100vh;
+    color: #1e293b;
+  }
+
+  .container { max-width: 1100px; margin: 0 auto; }
+
+  /* HEADER HERO */
+  .header {
+    background: linear-gradient(135deg, #0284c7 0%, #2563eb 50%, #7c3aed 100%);
+    border-radius: 20px;
+    padding: 35px 25px;
+    margin-bottom: 25px;
+    text-align: center;
+    color: #fff;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, .35);
+  }
+  .header h1 { font-size: 2rem; margin-bottom: 8px; letter-spacing: -.5px; }
+  .header h1 span { color: #38bdf8; }
+  .header p { opacity: .95; font-size: 1rem; max-width: 880px; margin: 0 auto; line-height: 1.6; }
+  .badge-group { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 18px; }
+  .badge {
+    background: rgba(255, 255, 255, .2);
+    padding: 5px 14px;
+    border-radius: 30px;
+    font-size: .74rem;
+    font-weight: 700;
+    color: #fff;
+    backdrop-filter: blur(5px);
+  }
+
+  /* CARDS GERAIS */
+  .card {
+    background: #fff;
+    border-radius: 20px;
+    padding: 26px;
+    margin-bottom: 22px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, .12);
+  }
+  .card h2 {
+    color: #0369a1;
+    margin-bottom: 14px;
+    border-left: 5px solid #0284c7;
+    padding-left: 12px;
+    font-size: 1.35rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .card h3 {
+    color: #0c4a6e;
+    margin: 22px 0 10px;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .card h4 { color: #0284c7; margin: 14px 0 6px; font-size: .98rem; }
+  .card p { color: #334155; line-height: 1.75; margin-bottom: 12px; font-size: .94rem; }
+  .card ul, .card ol { color: #334155; line-height: 1.8; margin: 8px 0 14px 25px; font-size: .94rem; }
+  .card code {
+    background: #e0f2fe;
+    color: #0369a1;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    font-size: .86rem;
+    font-weight: bold;
+  }
+  .card pre {
+    background: #020617;
+    color: #93c5fd;
+    padding: 14px 16px;
+    border-radius: 10px;
+    font-family: 'Courier New', monospace;
+    font-size: .82rem;
+    line-height: 1.6;
+    overflow-x: auto;
+    margin: 12px 0;
+    white-space: pre;
+  }
+
+  /* CAIXAS DE DESTAQUE */
+  .highlight-box {
+    padding: 14px 18px;
+    border-radius: 12px;
+    margin: 14px 0;
+    font-size: .92rem;
+    line-height: 1.7;
+  }
+  .highlight-box.blue { background: #f0f9ff; border-left: 5px solid #0284c7; color: #075985; }
+  .highlight-box.teal { background: #f0fdfa; border-left: 5px solid #0d9488; color: #134e4a; }
+  .highlight-box.yellow { background: #fffbe8; border-left: 5px solid #f59e0b; color: #854d0e; }
+  .highlight-box.purple { background: #faf5ff; border-left: 5px solid #8b5cf6; color: #5b21b6; }
+  .highlight-box.green { background: #dcfce7; border-left: 5px solid #16a34a; color: #15803d; }
+  .highlight-box.red { background: #fee2e2; border-left: 5px solid #dc2626; color: #991b1b; }
+
+  /* GRID DE CONCEITOS */
+  .conceito-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 14px;
+    margin: 18px 0;
+  }
+  .conceito-card {
+    background: #f8fafc;
+    border: 2px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 18px;
+    transition: .2s;
+  }
+  .conceito-card:hover {
+    transform: translateY(-3px);
+    border-color: #0284c7;
+    box-shadow: 0 6px 18px rgba(2, 132, 199, .15);
+  }
+  .conceito-card .tag {
+    font-size: .68rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    display: block;
+    color: #0284c7;
+  }
+  .conceito-card h4 { font-size: 1rem; color: #0f172a; margin-bottom: 6px; }
+  .conceito-card p { font-size: .83rem; color: #64748b; margin: 0; line-height: 1.55; }
+
+  /* FLUXOGRAMAS HORIZONTAIS */
+  .fluxo {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+    margin: 16px 0;
+  }
+  .fluxo .etapa {
+    background: linear-gradient(135deg, #0284c7, #2563eb);
+    color: white;
+    padding: 10px 16px;
+    border-radius: 10px;
+    font-size: .82rem;
+    font-weight: 700;
+    text-align: center;
+    min-width: 120px;
+  }
+  .fluxo .seta { color: #0284c7; font-size: 1.4rem; font-weight: bold; }
+
+  /* TABELAS */
+  table.tabela {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 14px 0;
+    font-size: .88rem;
+  }
+  table.tabela th {
+    background: linear-gradient(135deg, #0369a1, #0284c7);
+    color: #fff;
+    padding: 11px 13px;
+    text-align: left;
+    font-weight: 600;
+  }
+  table.tabela td {
+    padding: 11px 13px;
+    border-bottom: 1px solid #e2e8f0;
+    color: #334155;
+    vertical-align: top;
+  }
+  table.tabela tr:hover td { background: #f8fafc; }
+
+  /* ============================================================
+     LABORATÓRIO PRÁTICO: ETAPAS & PREVIEW MOBILE
+     ============================================================ */
+  .lab-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 20px;
+    margin-top: 15px;
+  }
+
+  .nav-passos {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+  }
+  .btn-passo {
+    background: #f1f5f9;
+    border: 2px solid #cbd5e1;
+    color: #475569;
+    padding: 7px 11px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: .76rem;
+    transition: .15s;
+    font-family: inherit;
+  }
+  .btn-passo:hover { background: #e2e8f0; color: #0f172a; }
+  .btn-passo.ativo {
+    background: #0284c7;
+    border-color: #0284c7;
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(2, 132, 199, .25);
+  }
+
+  /* PAINEL DE CÓDIGO COM BOTÃO COPIAR */
+  .painel-codigo {
+    position: relative;
+    background: #020617;
+    border-radius: 14px;
+    padding: 16px;
+    border: 1px solid #334155;
+  }
+  .painel-codigo h4 {
+    color: #38bdf8;
+    margin: 0 0 10px;
+    font-size: .88rem;
+    padding-right: 90px;
+  }
+  .painel-codigo pre {
+    margin: 0;
+    max-height: 420px;
+    overflow-y: auto;
+    white-space: pre;
+    background: transparent;
+    padding: 0;
+  }
+  .btn-copiar {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: #0284c7;
+    color: #fff;
+    border: none;
+    padding: 6px 11px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: .7rem;
+    font-weight: 800;
+    font-family: inherit;
+    z-index: 5;
+  }
+  .btn-copiar:hover { background: #38bdf8; color: #0f172a; }
+  .btn-copiar.copiado { background: #16a34a; }
+
+  /* MOCKUP DO CELULAR */
+  .celular-container {
+    background: #0f172a;
+    border: 10px solid #1e293b;
+    border-radius: 36px;
+    padding: 12px;
+    box-shadow: 0 20px 40px rgba(0,0,0,.45);
+    display: flex;
+    flex-direction: column;
+    height: 580px;
+    position: sticky;
+    top: 20px;
+  }
+  .celular-topo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #94a3b8;
+    font-size: .72rem;
+    font-weight: bold;
+    padding: 4px 12px 10px;
+  }
+  .celular-notch {
+    width: 90px;
+    height: 12px;
+    background: #1e293b;
+    border-radius: 10px;
+  }
+  .celular-tela {
+    flex: 1;
+    background: #0f172a;
+    border-radius: 20px;
+    overflow-y: auto;
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    font-size: .8rem;
+    position: relative;
+    color: #e2e8f0;
+  }
+  .celular-tela .app-card {
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 8px;
+  }
+
+  /* BARRA PWA INSTALL NO MOCKUP */
+  .banner-pwa {
+    background: #0284c7;
+    color: white;
+    padding: 8px 10px;
+    border-radius: 10px;
+    font-size: .72rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    box-shadow: 0 4px 10px rgba(2, 132, 199, .3);
+  }
+  .banner-pwa button {
+    background: #fff;
+    color: #0284c7;
+    border: none;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-weight: 800;
+    cursor: pointer;
+    font-size: .68rem;
+  }
+
+  /* COMPONENTES DO CRUD NO MOCKUP */
+  .app-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  .app-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #0284c7, #38bdf8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    color: white;
+  }
+  .app-input {
+    width: 100%;
+    padding: 7px 10px;
+    border: 1px solid #334155;
+    background: #0f172a;
+    color: #fff;
+    border-radius: 6px;
+    font-size: .78rem;
+    margin-bottom: 6px;
+    font-family: inherit;
+    outline: none;
+  }
+  .app-input:focus { border-color: #38bdf8; }
+  .app-btn {
+    width: 100%;
+    padding: 7px;
+    border: none;
+    border-radius: 6px;
+    background: #0284c7;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: .78rem;
+    margin-bottom: 10px;
+  }
+  .app-btn:active { background: #0369a1; }
+  .app-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: .68rem;
+  }
+  .app-table th, .app-table td {
+    border: 1px solid #334155;
+    padding: 4px 5px;
+    text-align: left;
+    color: #e2e8f0;
+  }
+  .app-table th { background: #0f172a; color: #38bdf8; font-size: .62rem; text-transform: uppercase; }
+  .app-table .btn-del {
+    background: #ef4444;
+    color: #fff;
+    border: none;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: .6rem;
+    cursor: pointer;
+  }
+
+  /* ============================================================
+     ESTILOS DO QUIZ DE FIXAÇÃO
+     ============================================================ */
+  .question {
+    background: #f8fafc;
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin-bottom: 16px;
+    border-left: 4px solid #0284c7;
+    border-top: 1px solid #e2e8f0;
+    border-right: 1px solid #e2e8f0;
+    border-bottom: 1px solid #e2e8f0;
+    text-align: left;
+  }
+  .question.tf { border-left-color: #8b5cf6; }
+  .question-header {
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: .93rem;
+    line-height: 1.5;
+  }
+  .question-number {
+    background: #0284c7;
+    color: white;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 26px;
+    font-size: 12px;
+    font-weight: bold;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .question.tf .question-number { background: #8b5cf6; }
+  .options { display: flex; flex-direction: column; gap: 8px; }
+  .options.tf { display: grid; grid-template-columns: 1fr 1fr; max-width: 320px; }
+  .option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    background: white;
+    border-radius: 8px;
+    border: 2px solid #e2e8f0;
+    cursor: pointer;
+    transition: all .2s;
+  }
+  .option:hover:not(.disabled) { border-color: #0284c7; background: #f0f9ff; }
+  .option input[type="radio"] {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    flex-shrink: 0;
+    accent-color: #0284c7;
+  }
+  .option label { font-size: .88rem; cursor: pointer; flex: 1; line-height: 1.4; color: #334155; }
+  .option.correct { border-color: #16a34a !important; background: #dcfce7 !important; font-weight: bold; }
+  .option.wrong { border-color: #dc2626 !important; background: #fee2e2 !important; }
+  .option.disabled { cursor: default; }
+
+  .btn-grupo {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 20px;
+    flex-wrap: wrap;
+  }
+  .btn {
+    background: linear-gradient(135deg, #0284c7, #2563eb);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: .92rem;
+    font-weight: 700;
+    transition: .2s;
+    font-family: inherit;
+  }
+  .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(2, 132, 199, .35); }
+  .btn-secondary { background: #64748b; }
+
+  .result-box {
+    background: #f8fafc;
+    border-radius: 16px;
+    padding: 24px;
+    text-align: center;
+    border: 3px solid #0284c7;
+    display: none;
+    margin-top: 24px;
+  }
+  .score { font-size: 3rem; font-weight: 900; color: #0369a1; }
+
+  .btn-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #0284c7;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 700;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, .25);
+    font-family: inherit;
+    z-index: 100;
+  }
+
+  @media (max-width: 850px) {
+    .lab-wrapper { grid-template-columns: 1fr; }
+    .celular-container { height: 520px; position: static; max-width: 320px; margin: 0 auto; }
+    .header h1 { font-size: 1.4rem; }
+    .card { padding: 18px 14px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container" id="inicio">
+
+  <!-- HEADER HERO -->
+  <header class="header">
+    <h1>📱 TEMA 10: Da Web ao Mobile — <span>Estratégias de Apps</span></h1>
+    <p>Compreenda o mapa das tecnologias modernas de desenvolvimento móvel e aprenda como converter sua aplicação Web (HTML, CSS e JavaScript) em um aplicativo instalável (PWA) e empacotável para Android (APK), inclusive <strong>sem instalar Android Studio</strong>, direto pelo GitHub.</p>
+    <div class="badge-group">
+      <span class="badge">🌐 Web Apps</span>
+      <span class="badge">📲 PWA</span>
+      <span class="badge">⚡ Capacitor</span>
+      <span class="badge">🐙 GitHub Actions</span>
+      <span class="badge">⚛️ React Native</span>
+      <span class="badge">🎯 Flutter</span>
+      <span class="badge">🤖 Kotlin</span>
+    </div>
+  </header>
+
+  <!-- SEÇÃO 1: O PANORAMA GERAL -->
+  <section class="card">
+    <h2>🗺️ 1. O Mapa Tecnológico: Como os Aplicativos São Criados?</h2>
+
+    <div class="highlight-box blue">
+      💡 <strong>A Pergunta Essencial:</strong> em vez de memorizar códigos de 4 ferramentas diferentes, o bom desenvolvedor aprende a responder: <em>"Qual é a melhor tecnologia para o problema, o prazo e a equipe que eu tenho hoje?"</em>
+    </div>
+
+    <p>O mercado de desenvolvimento de aplicativos organiza-se em <strong>quatro grandes categorias</strong> de acordo com a proximidade do hardware e a linguagem utilizada:</p>
+
+    <div class="conceito-grid">
+      <div class="conceito-card">
+        <span class="tag">1. Nativo Puro</span>
+        <h4>🤖 Kotlin (Android) / Swift (iOS)</h4>
+        <p>Linguagem oficial do sistema. Acesso 100% irrestrito aos sensores e máximo desempenho gráfico. <em>Desvantagem:</em> código separado para cada loja.</p>
+      </div>
+      <div class="conceito-card">
+        <span class="tag">2. Multiplataforma</span>
+        <h4>⚛️ React Native / 🎯 Flutter</h4>
+        <p>Gera apps para Android e iOS a partir de uma única base de código. React Native usa JavaScript/React; Flutter usa Dart.</p>
+      </div>
+      <div class="conceito-card">
+        <span class="tag">3. Progressive Web App</span>
+        <h4>📲 PWA (HTML + CSS + JS)</h4>
+        <p>Um site moderno que pode ser <strong>instalado</strong> na tela inicial do celular pelo navegador, funcionando em tela cheia e offline.</p>
+      </div>
+      <div class="conceito-card">
+        <span class="tag">4. Empacotador Híbrido</span>
+        <h4>⚡ Capacitor / Cordova</h4>
+        <p>Pega a aplicação Web existente e a embrulha dentro de um container nativo (WebView), gerando um arquivo <code>.apk</code>.</p>
+      </div>
+    </div>
+
+    <h3>⚖️ Comparativo Direto das Abordagens</h3>
+    <table class="tabela">
+      <thead>
+        <tr>
+          <th>Tecnologia</th>
+          <th>Linguagem Base</th>
+          <th>Plataformas</th>
+          <th>Curva para quem sabe JS</th>
+          <th>Cenário Ideal</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>PWA</strong></td>
+          <td>HTML / CSS / JS</td>
+          <td>Android, iOS, PC, Mac</td>
+          <td>⭐⭐⭐⭐⭐ (Imediata)</td>
+          <td>Sistemas internos e CRUDs sem loja.</td>
+        </tr>
+        <tr>
+          <td><strong>Capacitor</strong></td>
+          <td>HTML / CSS / JS</td>
+          <td>Android e iOS (APK/IPA)</td>
+          <td>⭐⭐⭐⭐ (Muito rápida)</td>
+          <td>Levar um sistema Web existente para as lojas.</td>
+        </tr>
+        <tr>
+          <td><strong>React Native</strong></td>
+          <td>JavaScript / React</td>
+          <td>Android e iOS</td>
+          <td>⭐⭐⭐ (Média)</td>
+          <td>Apps comerciais com equipe Web.</td>
+        </tr>
+        <tr>
+          <td><strong>Flutter</strong></td>
+          <td>Dart</td>
+          <td>Android, iOS, Web, Desktop</td>
+          <td>⭐⭐ (Nova sintaxe)</td>
+          <td>Apps com animações refinadas.</td>
+        </tr>
+        <tr>
+          <td><strong>Kotlin</strong></td>
+          <td>Kotlin</td>
+          <td>Android puro</td>
+          <td>⭐ (Ecossistema JVM)</td>
+          <td>Controle fino de hardware.</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- SEÇÃO 2: A TRILHA -->
+  <section class="card">
+    <h2>🚀 2. A Trilha Estratégica: Da Web ao APK</h2>
+
+    <p>Se a turma já domina HTML, CSS, JS e LocalStorage, o caminho mais produtivo não é começar do zero com nova linguagem, mas evoluir em degraus:</p>
+
+    <div class="fluxo">
+      <div class="etapa">Página Web<br><small>(HTML + CSS)</small></div>
+      <div class="seta">→</div>
+      <div class="etapa">App Web<br><small>(CRUD + LocalStorage)</small></div>
+      <div class="seta">→</div>
+      <div class="etapa">PWA Instalável<br><small>(manifest + sw.js)</small></div>
+      <div class="seta">→</div>
+      <div class="etapa">Empacotamento<br><small>(Capacitor no GitHub)</small></div>
+      <div class="seta">→</div>
+      <div class="etapa">App Nativo<br><small>(Arquivo .APK)</small></div>
+    </div>
+
+    <div class="highlight-box teal">
+      🧩 <strong>O Que Torna um Site uma PWA?</strong><br>
+      Apenas 3 requisitos fundamentais:
+      <ol style="margin-left:20px;margin-top:6px;">
+        <li><strong>Design Responsivo:</strong> a tela se adapta ao tamanho dos smartphones.</li>
+        <li><strong>Manifesto (<code>manifest.json</code>):</strong> nome, ícones, cor da barra de status.</li>
+        <li><strong>Service Worker (<code>sw.js</code>):</strong> cache offline e instalação segura.</li>
+        <li><strong>HTTPS:</strong> exigência do navegador para habilitar a instalação.</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- SEÇÃO 3: LABORATÓRIO PRÁTICO -->
+  <section class="card">
+    <h2>🧪 3. Laboratório Prático: Transformando o CRUD em App</h2>
+    <p>Acompanhe os <strong>7 passos reais</strong> para transformar o CRUD de Alunos em app instalável (PWA) e empacotável (APK), <strong>100% gratuito pelo GitHub</strong>. Use o botão <strong>📋 Copiar</strong> de cada passo para levar o código direto ao seu repositório.</p>
+
+    <div class="nav-passos">
+      <button class="btn-passo ativo" onclick="mudarPasso(1)">1. index.html</button>
+      <button class="btn-passo" onclick="mudarPasso(2)">2. style.css</button>
+      <button class="btn-passo" onclick="mudarPasso(3)">3. app.js</button>
+      <button class="btn-passo" onclick="mudarPasso(4)">4. manifest.json</button>
+      <button class="btn-passo" onclick="mudarPasso(5)">5. sw.js</button>
+      <button class="btn-passo" onclick="mudarPasso(6)">6. build.yml</button>
+      <button class="btn-passo" onclick="mudarPasso(7)">7. Publicar</button>
+    </div>
+
+    <div class="lab-wrapper">
+      <div>
+        <div class="highlight-box blue" id="labDescricao"><strong>Passo 1: <code>www/index.html</code></strong><br>Página principal do app. Note o <code>&lt;meta viewport&gt;</code> (adapta ao celular), o <code>&lt;link rel="manifest"&gt;</code> (habilita a PWA) e o <code>&lt;link rel="icon"&gt;</code>.</div>
+
+        <div class="painel-codigo">
+          <h4 id="labTituloCodigo">www/index.html</h4>
+          <button class="btn-copiar" id="btnCopiarPasso" onclick="copiarPassoAtual(this)">📋 Copiar</button>
+          <pre id="labCodigoPre">&lt;!DOCTYPE html&gt;
+&lt;html lang="pt-BR"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"&gt;
+    &lt;title&gt;AlunosApp&lt;/title&gt;
+    &lt;link rel="stylesheet" href="style.css"&gt;
+    &lt;link rel="manifest" href="manifest.json"&gt;
+    &lt;meta name="theme-color" content="#0284c7"&gt;
+    &lt;link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div class="container"&gt;
+        &lt;header class="topo"&gt;
+            &lt;div class="icone"&gt;🎓&lt;/div&gt;
+            &lt;div&gt;
+                &lt;h1&gt;AlunosApp&lt;/h1&gt;
+                &lt;p&gt;Gestão Escolar&lt;/p&gt;
+            &lt;/div&gt;
+        &lt;/header&gt;
+
+        &lt;div class="card"&gt;
+            &lt;input id="nome" placeholder="Nome Completo"&gt;
+            &lt;input id="email" placeholder="E-mail"&gt;
+            &lt;input id="idade" type="number" placeholder="Idade"&gt;
+            &lt;button id="btnSalvar" class="btn-salvar" onclick="salvar()"&gt;Salvar Aluno&lt;/button&gt;
+        &lt;/div&gt;
+
+        &lt;div class="card tabela-box"&gt;
+            &lt;table&gt;
+                &lt;thead&gt;
+                    &lt;tr&gt;&lt;th&gt;ID&lt;/th&gt;&lt;th&gt;Nome&lt;/th&gt;&lt;th&gt;Idade&lt;/th&gt;&lt;th&gt;Ações&lt;/th&gt;&lt;/tr&gt;
+                &lt;/thead&gt;
+                &lt;tbody id="listaAlunos"&gt;&lt;/tbody&gt;
+            &lt;/table&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;script src="app.js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+        </div>
+      </div>
+
+      <div class="celular-container">
+        <div class="celular-topo">
+          <span>09:41</span>
+          <div class="celular-notch"></div>
+          <span>100% 🔋</span>
+        </div>
+        <div class="celular-tela" id="telaMockup">
+          <div class="banner-pwa" id="pwaBanner">
+            <span>📲 Instalar no Celular?</span>
+            <button onclick="instalarAppMockup()">Instalar</button>
+          </div>
+
+          <div class="app-header">
+            <div class="app-icon">🎓</div>
+            <div>
+              <strong style="font-size:.85rem;color:#f8fafc;">AlunosApp</strong><br>
+              <span style="color:#94a3b8;font-size:.68rem;">CRUD PWA Offline</span>
+            </div>
+          </div>
+
+          <input class="app-input" id="mockNome" placeholder="Nome Completo">
+          <input class="app-input" id="mockEmail" placeholder="E-mail">
+          <input class="app-input" id="mockIdade" type="number" placeholder="Idade">
+          <button class="app-btn" onclick="mockSalvar()">Salvar Aluno</button>
+
+          <table class="app-table">
+            <thead>
+              <tr><th>ID</th><th>Nome</th><th>Idade</th><th></th></tr>
+            </thead>
+            <tbody id="mockLista"><tr><td>#1</td><td>Carlos Silva</td><td>22</td><td><button class="btn-del">X</button></td></tr><tr><td>#2</td><td>Ana Souza</td><td>19</td><td><button class="btn-del">X</button></td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SEÇÃO 4: GITHUB ACTIONS -->
+  <section class="card">
+    <h2>🐙 4. Gerando o APK sem Android Studio: GitHub Actions</h2>
+
+    <div class="highlight-box purple">
+      💡 <strong>Novidade importante:</strong> hoje é possível gerar o APK <strong>direto pelo navegador</strong>, sem instalar Node.js, Android Studio nem configurar SDK local. O <strong>GitHub Actions</strong> é um serviço gratuito que roda os comandos do Capacitor em servidores na nuvem e devolve o APK pronto para download.
+    </div>
+
+    <h3>📁 Estrutura do Repositório</h3>
+    <pre>seu-repo/
+├── .github/
+│   └── workflows/
+│       └── build.yml       ← gera o APK na nuvem
+└── www/
+    ├── index.html
+    ├── style.css
+    ├── app.js
+    ├── manifest.json
+    ├── sw.js
+    └── icons/
+        ├── icon-192.png
+        └── icon-512.png</pre>
+
+    <h3>🔄 O que o workflow faz</h3>
+    <ol>
+      <li><strong>A cada push em <code>main</code>:</strong> publica <code>www/</code> no GitHub Pages (link HTTPS público, com PWA instalável).</li>
+      <li><strong>A cada tag <code>v*</code>:</strong> instala Capacitor, compila o APK e anexa numa <em>Release</em> do GitHub.</li>
+      <li>Você baixa o APK por <code>github.com/SEU-USUARIO/SEU-REPO/releases/download/v1.0.0/app-debug.apk</code> — link HTTPS que o Chrome não bloqueia.</li>
+    </ol>
+
+    <div class="highlight-box green">
+      ✅ <strong>Zero instalação local.</strong> Todo o build acontece nos servidores do GitHub. O aluno só precisa do navegador.
+    </div>
+
+    <div class="highlight-box yellow">
+      ⚠️ <strong>Requisito:</strong> antes de rodar, é obrigatório ativar em <em>Settings → Pages → Source: <strong>GitHub Actions</strong></em>. Sem isso, o job <code>deploy-pwa</code> falha com <code>Get Pages site failed</code>.
+    </div>
+  </section>
+
+  <!-- SEÇÃO 5: CAPACITOR LOCAL (ALTERNATIVA) -->
+  <section class="card">
+    <h2>⚡ 5. Alternativa: Capacitor Instalado Localmente</h2>
+
+    <div class="highlight-box blue">
+      💡 <strong>Quando usar:</strong> se a rede da escola permitir instalar Node.js e Android Studio no computador, o processo local também funciona. É o mesmo que o GitHub Actions faz nos bastidores, mas rodando na sua máquina.
+    </div>
+
+    <p>Para o desenvolvedor Web, o fluxo de geração de um APK local torna-se:</p>
+
+    <pre>// 1. Inicializa o Capacitor no projeto existente
+npm install @capacitor/core @capacitor/cli
+npx cap init "AlunosApp" "com.escola.alunosapp" --web-dir www
+
+// 2. Adiciona a plataforma Android
+npm install @capacitor/android
+npx cap add android
+
+// 3. Copia o HTML/CSS/JS e abre no Android Studio
+npx cap copy
+npx cap open android</pre>
+
+    <div class="highlight-box green">
+      🛡️ <strong>Vantagem estrutural:</strong> o <strong>LocalStorage</strong>, o <strong>CRUD</strong> e toda a lógica JavaScript continuam funcionando idênticos no celular, mas agora com ícone na gaveta de aplicativos.
+    </div>
+  </section>
+
+  <!-- SEÇÃO 6: QUIZ -->
+  <section class="card" id="sec-quiz">
+    <h2>📝 6. Questionário de Fixação (17 Questões)</h2>
+    <p>Avalie seu domínio sobre a arquitetura de aplicativos modernos, PWA, Capacitor e GitHub Actions:</p>
+
+    <form id="formQuiz">
+      <!-- Q1 -->
+      <div class="question" id="q1">
+        <div class="question-header">
+          <span class="question-number">1</span>
+          Qual é a principal linguagem utilizada para desenvolver aplicativos nativos para o sistema operacional Android oficial da Google?
+        </div>
+        <div class="options">
+          <div class="option disabled"><input type="radio" name="q1" value="A" disabled=""><label>PHP</label></div>
+          <div class="option correct disabled"><input type="radio" name="q1" value="B" disabled=""><label>Kotlin</label></div>
+          <div class="option disabled"><input type="radio" name="q1" value="C" disabled=""><label>Ruby</label></div>
+          <div class="option disabled"><input type="radio" name="q1" value="D" disabled=""><label>CSS Puro</label></div>
+        </div>
+      </div>
+
+      <!-- Q2 -->
+      <div class="question" id="q2">
+        <div class="question-header">
+          <span class="question-number">2</span>
+          O framework React Native permite criar aplicativos para Android e iOS utilizando qual base de programação?
+        </div>
+        <div class="options">
+          <div class="option disabled"><input type="radio" name="q2" value="A" disabled=""><label>C++ e Assembly</label></div>
+          <div class="option correct disabled"><input type="radio" name="q2" value="B" disabled=""><label>JavaScript e a biblioteca React</label></div>
+          <div class="option disabled"><input type="radio" name="q2" value="C" disabled=""><label>Python e Django</label></div>
+          <div class="option disabled"><input type="radio" name="q2" value="D" disabled=""><label>Apenas comandos SQL</label></div>
+        </div>
+      </div>
+
+      <!-- Q3 -->
+      <div class="question" id="q3">
+        <div class="question-header">
+          <span class="question-number">3</span>
+          O framework Flutter, criado pela Google, utiliza nativamente qual linguagem de programação?
+        </div>
+        <div class="options">
+          <div class="option correct disabled"><input type="radio" name="q3" value="A" disabled=""><label>Dart</label></div>
+          <div class="option disabled"><input type="radio" name="q3" value="B" disabled=""><label>Java 8</label></div>
+          <div class="option disabled"><input type="radio" name="q3" value="C" disabled=""><label>TypeScript</label></div>
+          <div class="option disabled"><input type="radio" name="q3" value="D" disabled=""><label>Swift</label></div>
+        </div>
+      </div>
+
+      <!-- Q4 -->
+      <div class="question" id="q4">
+        <div class="question-header">
+          <span class="question-number">4</span>
+          O que significa a sigla PWA no contexto de desenvolvimento de software?
+        </div>
+        <div class="options">
+          <div class="option disabled"><input type="radio" name="q4" value="A" disabled=""><label>Personal Web Assistant</label></div>
+          <div class="option correct disabled"><input type="radio" name="q4" value="B" disabled=""><label>Progressive Web Apps (Aplicativos Web Progressivos)</label></div>
+          <div class="option disabled"><input type="radio" name="q4" value="C" disabled=""><label>Programming With Android</label></div>
+          <div class="option disabled"><input type="radio" name="q4" value="D" disabled=""><label>Public Wireless Access</label></div>
+        </div>
+      </div>
+
+      <!-- Q5 -->
+      <div class="question" id="q5">
+        <div class="question-header">
+          <span class="question-number">5</span>
+          Qual é o arquivo responsável por informar ao sistema operacional o nome do app, os ícones de inicialização e as cores da barra em uma PWA?
+        </div>
+        <div class="options">
+          <div class="option disabled"><input type="radio" name="q5" value="A" disabled=""><label>style.css</label></div>
+          <div class="option correct disabled"><input type="radio" name="q5" value="B" disabled=""><label>manifest.json</label></div>
+          <div class="option disabled"><input type="radio" name="q5" value="C" disabled=""><label>database.sql</label></div>
+          <div class="option disabled"><input type="radio" name="q5" value="D" disabled=""><label>package-lock.xml</label></div>
+        </div>
+      </div>
+
+      <!-- Q6 -->
+      <div class="question" id="q6">
+        <div class="question-header">
+          <span class="question-number">6</span>
+          Se você já possui um sistema CRUD em HTML, CSS e JavaScript, qual é o caminho mais rápido para transformá-lo em aplicativo sem reaprender outra linguagem?
+        </div>
+        <div class="options">
+          <div class="option disabled"><input type="radio" name="q6" value="A" disabled=""><label>Reescrever tudo do zero em C#</label></div>
+          <div class="option correct disabled"><input type="radio" name="q6" value="B" disabled=""><label>Configurar como PWA ou empacotar via Capacitor</label></div>
+          <div class="option disabled"><input type="radio" name="q6" value="C" disabled=""><label>Apenas mudar a extensão do arquivo para .exe</label></div>
+          <div class="option disabled"><input type="radio" name="q6" value="D" disabled=""><label>Instalar uma placa de vídeo nova</label></div>
+        </div>
+      </div>
+
+      <!-- Q7 -->
+      <div class="question" id="q7">
+        <div class="question-header">
+          <span class="question-number">7</span>
+          No <code>manifest.json</code>, o que a propriedade <code>"display": "standalone"</code> faz ao abrir o app instalado?
+        </div>
+        <div class="options">
+          <div class="option correct disabled"><input type="radio" name="q7" value="A" disabled=""><label>Abre em tela cheia, ocultando a barra de navegação do browser</label></div>
+          <div class="option disabled"><input type="radio" name="q7" value="B" disabled=""><label>Bloqueia o toque na tela</label></div>
+          <div class="option disabled"><input type="radio" name="q7" value="C" disabled=""><label>Exclui o LocalStorage</label></div>
+          <div class="option disabled"><input type="radio" name="q7" value="D" disabled=""><label>Obriga o uso de teclado físico</label></div>
+        </div>
+      </div>
+
+      <!-- Q8 -->
+      <div class="question" id="q8">
+        <div class="question-header">
+          <span class="question-number">8</span>
+          Qual é o papel da ferramenta Capacitor no ecossistema mobile moderno?
+        </div>
+        <div class="options">
+          <div class="option disabled"><input type="radio" name="q8" value="A" disabled=""><label>Criar bancos de dados relacionais na nuvem</label></div>
+          <div class="option correct disabled"><input type="radio" name="q8" value="B" disabled=""><label>Empacotar arquivos Web (HTML/JS/CSS) em um app binário nativo (APK) através de uma WebView</label></div>
+          <div class="option disabled"><input type="radio" name="q8" value="C" disabled=""><label>Substituir o processador do celular</label></div>
+          <div class="option disabled"><input type="radio" name="q8" value="D" disabled=""><label>Converter imagens PNG em arquivos de texto</label></div>
+        </div>
+      </div>
+
+      <!-- Q9 -->
+      <div class="question" id="q9">
+        <div class="question-header">
+          <span class="question-number">9</span>
+          Qual meta tag é obrigatória no <code>&lt;head&gt;</code> para que o layout se ajuste à largura das telas dos celulares?
+        </div>
+        <div class="options">
+          <div class="option disabled"><input type="radio" name="q9" value="A" disabled=""><label><code>&lt;meta charset="UTF-8"&gt;</code></label></div>
+          <div class="option correct disabled"><input type="radio" name="q9" value="B" disabled=""><label><code>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</code></label></div>
+          <div class="option disabled"><input type="radio" name="q9" value="C" disabled=""><label><code>&lt;meta http-equiv="refresh"&gt;</code></label></div>
+          <div class="option disabled"><input type="radio" name="q9" value="D" disabled=""><label><code>&lt;meta name="author"&gt;</code></label></div>
+        </div>
+      </div>
+
+      <!-- Q10 -->
+      <div class="question" id="q10">
+        <div class="question-header">
+          <span class="question-number">10</span>
+          Por que uma PWA consegue continuar exibindo dados mesmo sem conexão com a internet?
+        </div>
+        <div class="options">
+          <div class="option disabled"><input type="radio" name="q10" value="A" disabled=""><label>Porque ela gera sinal 5G próprio</label></div>
+          <div class="option correct disabled"><input type="radio" name="q10" value="B" disabled=""><label>Porque utiliza recursos locais, como o LocalStorage gravado no disco do dispositivo</label></div>
+          <div class="option disabled"><input type="radio" name="q10" value="C" disabled=""><label>Porque o cabo de energia mantém os dados na memória</label></div>
+          <div class="option disabled"><input type="radio" name="q10" value="D" disabled=""><label>PWAs não funcionam offline de forma alguma</label></div>
+        </div>
+      </div>
+
+      <!-- Q11 -->
+      <div class="question" id="q11">
+        <div class="question-header">
+          <span class="question-number">11</span>
+          Qual é a principal vantagem de escolher uma abordagem multiplataforma (React Native ou Flutter) em vez de nativa pura?
+        </div>
+        <div class="options">
+          <div class="option correct disabled"><input type="radio" name="q11" value="A" disabled=""><label>Manter uma única base de código para atender Android e iOS</label></div>
+          <div class="option disabled"><input type="radio" name="q11" value="B" disabled=""><label>Garantir que o app nunca terá bugs</label></div>
+          <div class="option disabled"><input type="radio" name="q11" value="C" disabled=""><label>Não precisar publicar na Google Play Store</label></div>
+          <div class="option disabled"><input type="radio" name="q11" value="D" disabled=""><label>Fazer o download do app ser instantâneo sem internet</label></div>
+        </div>
+      </div>
+
+      <!-- Q12 -->
+      <div class="question" id="q12">
+        <div class="question-header">
+          <span class="question-number">12</span>
+          Ao adicionar o campo "Idade" no formulário do CRUD Web e empacotá-lo como app móvel, o que acontece com a lógica JavaScript?
+        </div>
+        <div class="options">
+          <div class="option disabled"><input type="radio" name="q12" value="A" disabled=""><label>Ela para de funcionar porque celular não roda JavaScript</label></div>
+          <div class="option correct disabled"><input type="radio" name="q12" value="B" disabled=""><label>Ela continua funcionando, pois o WebView executa o motor JavaScript normalmente</label></div>
+          <div class="option disabled"><input type="radio" name="q12" value="C" disabled=""><label>Exige converter todos os números para texto</label></div>
+          <div class="option disabled"><input type="radio" name="q12" value="D" disabled=""><label>O botão salvar é desativado permanentemente</label></div>
+        </div>
+      </div>
+
+      <!-- Q13 (V/F) -->
+      <div class="question tf" id="q13">
+        <div class="question-header">
+          <span class="question-number">13</span>
+          Para instalar uma PWA no celular, o usuário é obrigado a pagar a taxa de desenvolvedor da Google Play.
+        </div>
+        <div class="options tf">
+          <div class="option disabled"><input type="radio" name="q13" value="V" disabled=""><label>✅ Verdadeiro</label></div>
+          <div class="option correct disabled"><input type="radio" name="q13" value="F" disabled=""><label>❌ Falso</label></div>
+        </div>
+      </div>
+
+      <!-- Q14 (V/F) -->
+      <div class="question tf" id="q14">
+        <div class="question-header">
+          <span class="question-number">14</span>
+          O Kotlin possui interoperabilidade total com Java, permitindo que bibliotecas clássicas rodem em projetos modernos de Kotlin.
+        </div>
+        <div class="options tf">
+          <div class="option correct disabled"><input type="radio" name="q14" value="V" disabled=""><label>✅ Verdadeiro</label></div>
+          <div class="option disabled"><input type="radio" name="q14" value="F" disabled=""><label>❌ Falso</label></div>
+        </div>
+      </div>
+
+      <!-- Q15 (V/F) -->
+      <div class="question tf" id="q15">
+        <div class="question-header">
+          <span class="question-number">15</span>
+          O <code>manifest.json</code> é vinculado ao HTML através de <code>&lt;link rel="manifest" href="manifest.json"&gt;</code>.
+        </div>
+        <div class="options tf">
+          <div class="option correct disabled"><input type="radio" name="q15" value="V" disabled=""><label>✅ Verdadeiro</label></div>
+          <div class="option disabled"><input type="radio" name="q15" value="F" disabled=""><label>❌ Falso</label></div>
+        </div>
+      </div>
+
+      <!-- Q16 (V/F) -->
+      <div class="question tf" id="q16">
+        <div class="question-header">
+          <span class="question-number">16</span>
+          É possível gerar o APK de um aplicativo Web sem instalar o Android Studio no computador, utilizando apenas o GitHub Actions.
+        </div>
+        <div class="options tf">
+          <div class="option correct disabled"><input type="radio" name="q16" value="V" disabled=""><label>✅ Verdadeiro</label></div>
+          <div class="option disabled"><input type="radio" name="q16" value="F" disabled=""><label>❌ Falso</label></div>
+        </div>
+      </div>
+
+      <!-- Q17 (V/F) -->
+      <div class="question tf" id="q17">
+        <div class="question-header">
+          <span class="question-number">17</span>
+          O <code>sw.js</code> (Service Worker) é o arquivo responsável por permitir que a PWA funcione offline, guardando arquivos em cache.
+        </div>
+        <div class="options tf">
+          <div class="option correct disabled"><input type="radio" name="q17" value="V" disabled=""><label>✅ Verdadeiro</label></div>
+          <div class="option disabled"><input type="radio" name="q17" value="F" disabled=""><label>❌ Falso</label></div>
+        </div>
+      </div>
+
+      <div class="btn-grupo">
+        <button type="button" class="btn" onclick="corrigirQuiz()">✅ Verificar Respostas</button>
+        <button type="button" class="btn btn-secondary" onclick="limparQuiz()">🔄 Limpar Respostas</button>
+      </div>
+    </form>
+
+    <div class="result-box" id="resultadoQuiz" style="display: block;">
+      <h3 style="color:#0369a1;margin-bottom:8px;">📊 Resultado da Avaliação</h3>
+      <div class="score" id="pontuacao">17 / 17</div>
+      <p id="txtPercentual" style="font-weight:bold;color:#0c4a6e;margin-top:8px;">Aproveitamento: 100%</p>
+    </div>
+  </section>
+
+</div>
+
+<button class="btn-top" onclick="document.getElementById('inicio').scrollIntoView({behavior:'smooth'})">⬆️ Topo</button>
+
+<script>
+/* ============================================================
+   PASSOS DO LABORATÓRIO (7 PASSOS REAIS)
+   ============================================================ */
+const passosInfo = {
+  1: {
+    desc: '<strong>Passo 1: <code>www/index.html</code></strong><br>Página principal do app. Note o <code>&lt;meta viewport&gt;</code> (adapta ao celular), o <code>&lt;link rel="manifest"&gt;</code> (habilita a PWA) e o <code>&lt;link rel="icon"&gt;</code>.',
+    titulo: 'www/index.html',
+    codigo: `<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>AlunosApp</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0284c7">
+    <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+</head>
+<body>
+    <div class="container">
+        <header class="topo">
+            <div class="icone">🎓</div>
+            <div>
+                <h1>AlunosApp</h1>
+                <p>Gestão Escolar</p>
+            </div>
+        </header>
+
+        <div class="card">
+            <input id="nome" placeholder="Nome Completo">
+            <input id="email" placeholder="E-mail">
+            <input id="idade" type="number" placeholder="Idade">
+            <button id="btnSalvar" class="btn-salvar" onclick="salvar()">Salvar Aluno</button>
+        </div>
+
+        <div class="card tabela-box">
+            <table>
+                <thead>
+                    <tr><th>ID</th><th>Nome</th><th>Idade</th><th>Ações</th></tr>
+                </thead>
+                <tbody id="listaAlunos"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="app.js"><\/script>
+</body>
+</html>`
+  },
+  2: {
+    desc: '<strong>Passo 2: <code>www/style.css</code></strong><br>Estilos escuros com aparência nativa de app. Note o <code>env(safe-area-inset-*)</code> — evita que o app fique embaixo da barra de status do Android.',
+    titulo: 'www/style.css',
+    codigo: `* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: #0f172a;
+    color: #e2e8f0;
+    padding: 16px;
+    padding-top: calc(16px + env(safe-area-inset-top, 0));
+    padding-bottom: calc(16px + env(safe-area-inset-bottom, 0));
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+}
+.container {
+    width: 100%;
+    max-width: 480px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+.topo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 6px 0;
+}
+.icone {
+    width: 44px;
+    height: 44px;
+    background: linear-gradient(135deg, #0284c7, #38bdf8);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+}
+.topo h1 { font-size: 1.3rem; color: #f8fafc; }
+.topo p { font-size: 0.75rem; color: #94a3b8; }
+
+.card {
+    background: #1e293b;
+    border-radius: 12px;
+    padding: 14px;
+    border: 1px solid #334155;
+}
+input {
+    width: 100%;
+    padding: 10px 12px;
+    background: #0f172a;
+    border: 1px solid #334155;
+    color: #fff;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+    outline: none;
+}
+input:focus { border-color: #38bdf8; }
+
+.btn-salvar {
+    width: 100%;
+    background: #0284c7;
+    color: white;
+    border: none;
+    padding: 11px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+.btn-salvar:active { background: #0369a1; }
+
+.tabela-box { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+th, td { padding: 8px; border-bottom: 1px solid #334155; text-align: left; }
+th { background: #0f172a; color: #38bdf8; text-transform: uppercase; font-size: 0.7rem; }
+
+.btn-del {
+    background: #ef4444;
+    color: white;
+    border: none;
+    padding: 4px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.72rem;
+}`
+  },
+  3: {
+    desc: '<strong>Passo 3: <code>www/app.js</code></strong><br>CRUD com LocalStorage. Usa <code>createElement</code> + <code>textContent</code> (em vez de template literals) — isso evita que o código se quebre se for colado manualmente.',
+    titulo: 'www/app.js',
+    codigo: `let alunos = [];
+let proximoId = 1;
+const CHAVE = "alunos_app_database";
+
+function carregar() {
+    const salvo = localStorage.getItem(CHAVE);
+    if (salvo) {
+        try {
+            alunos = JSON.parse(salvo);
+            proximoId = alunos.length ? Math.max(...alunos.map(a => a.id)) + 1 : 1;
+        } catch (e) {
+            alunos = [];
+            proximoId = 1;
+        }
+    }
+    listar();
+}
+
+function persistir() {
+    localStorage.setItem(CHAVE, JSON.stringify(alunos));
+}
+
+function listar() {
+    const tbody = document.getElementById("listaAlunos");
+    tbody.innerHTML = "";
+    if (alunos.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:#64748b;">Nenhum aluno cadastrado.</td></tr>';
+        return;
+    }
+    for (let i = 0; i < alunos.length; i++) {
+        const a = alunos[i];
+        const tr = document.createElement("tr");
+
+        const tdId = document.createElement("td");
+        tdId.textContent = "#" + a.id;
+
+        const tdNome = document.createElement("td");
+        const strong = document.createElement("strong");
+        strong.textContent = a.nome;
+        tdNome.appendChild(strong);
+
+        const tdIdade = document.createElement("td");
+        tdIdade.textContent = a.idade ? a.idade + " anos" : "-";
+
+        const tdAcoes = document.createElement("td");
+        const btn = document.createElement("button");
+        btn.className = "btn-del";
+        btn.textContent = "Excluir";
+        btn.addEventListener("click", function () { excluir(a.id); });
+        tdAcoes.appendChild(btn);
+
+        tr.appendChild(tdId);
+        tr.appendChild(tdNome);
+        tr.appendChild(tdIdade);
+        tr.appendChild(tdAcoes);
+        tbody.appendChild(tr);
+    }
+}
+
+function salvar() {
+    const n = document.getElementById("nome");
+    const e = document.getElementById("email");
+    const i = document.getElementById("idade");
+
+    if (!n.value.trim()) {
+        alert("Preencha o nome!");
+        return;
+    }
+
+    alunos.push({
+        id: proximoId++,
+        nome: n.value.trim(),
+        email: e.value.trim(),
+        idade: i.value.trim()
+    });
+
+    n.value = "";
+    e.value = "";
+    i.value = "";
+
+    persistir();
+    listar();
+}
+
+function excluir(id) {
+    alunos = alunos.filter(a => a.id !== id);
+    persistir();
+    listar();
+}
+
+carregar();
+
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function () {
+        navigator.serviceWorker.register('sw.js')
+            .then(function () { console.log('Service Worker registrado'); })
+            .catch(function (err) { console.warn('Falha no SW:', err); });
+    });
+}`
+  },
+  4: {
+    desc: '<strong>Passo 4: <code>www/manifest.json</code></strong><br>Diz ao navegador que o site é instalável. O <code>display: standalone</code> faz o app abrir em tela cheia. Os ícones precisam existir de verdade em <code>www/icons/</code>.',
+    titulo: 'www/manifest.json',
+    codigo: `{
+  "name": "AlunosApp - Gestão Escolar",
+  "short_name": "AlunosApp",
+  "description": "App de cadastro de alunos com LocalStorage",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0f172a",
+  "theme_color": "#0284c7",
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}`
+  },
+  5: {
+    desc: '<strong>Passo 5: <code>www/sw.js</code></strong><br>Service Worker. Guarda os arquivos em cache para o app abrir offline. <strong>Truque importante:</strong> ao editar o site, troque <code>alunosapp-v2</code> por <code>-v3</code>, <code>-v4</code>… senão o celular continua mostrando a versão antiga.',
+    titulo: 'www/sw.js',
+    codigo: `const CACHE = 'alunosapp-v2';
+const ASSETS = [
+  './',
+  './index.html',
+  './style.css',
+  './app.js',
+  './manifest.json',
+  './icons/icon-192.png',
+  './icons/icon-512.png'
+];
+
+self.addEventListener('install', e => {
+  e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS)));
+  self.skipWaiting();
+});
+
+self.addEventListener('activate', e => {
+  e.waitUntil(
+    caches.keys().then(keys =>
+      Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k)))
+    )
+  );
+  self.clients.claim();
+});
+
+self.addEventListener('fetch', e => {
+  e.respondWith(
+    caches.match(e.request).then(cached => cached || fetch(e.request))
+  );
+});`
+  },
+  6: {
+    desc: '<strong>Passo 6: <code>.github/workflows/build.yml</code></strong><br>O coração do processo. Publica a PWA no GitHub Pages e gera o APK via Capacitor automaticamente, <strong>sem instalar nada no computador</strong>.',
+    titulo: '.github/workflows/build.yml',
+    codigo: `name: Deploy PWA & Build APK
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  # ================= PWA (GitHub Pages) =================
+  deploy-pwa:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: \${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Baixar projeto
+        uses: actions/checkout@v4
+
+      - name: Configurar Pages
+        uses: actions/configure-pages@v4
+
+      - name: Empacotar www/
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: www
+
+      - name: Publicar no GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+  # ================= APK (Capacitor) =================
+  build-apk:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Baixar projeto
+        uses: actions/checkout@v4
+
+      - name: Configurar Java 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - name: Configurar Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Instalar Capacitor 7
+        run: |
+          npm init -y
+          npm install @capacitor/core@7 @capacitor/cli@7 @capacitor/android@7
+
+      - name: Configurar Capacitor
+        run: |
+          cat > capacitor.config.json <<'EOF'
+          {
+            "appId": "com.almeida.alunosapp",
+            "appName": "AlunosApp",
+            "webDir": "www",
+            "bundledWebRuntime": false
+          }
+          EOF
+
+      - name: Verificar conteúdo de www/
+        run: ls -la www/
+
+      - name: Adicionar plataforma Android
+        run: npx cap add android
+
+      - name: Sincronizar Capacitor
+        run: npx cap sync android
+
+      - name: Compilar APK
+        working-directory: android
+        run: ./gradlew assembleDebug
+
+      - name: Disponibilizar APK como artefato
+        uses: actions/upload-artifact@v4
+        with:
+          name: AlunosApp-APK
+          path: android/app/build/outputs/apk/debug/app-debug.apk
+
+      - name: Publicar Release (somente em tags v*)
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: android/app/build/outputs/apk/debug/app-debug.apk
+        env:
+          GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}`
+  },
+  7: {
+    desc: '<strong>Passo 7: Publicar no GitHub</strong><br>Depois de subir todos os arquivos, ativar o Pages em <em>Settings → Pages → Source: GitHub Actions</em> e criar uma tag <code>v1.0.0</code>, você terá: PWA instalável em <code>SEU-USUARIO.github.io/SEU-REPO/</code> e APK em <code>github.com/SEU-USUARIO/SEU-REPO/releases/download/v1.0.0/app-debug.apk</code>.',
+    titulo: 'Estrutura final e links gerados',
+    codigo: `seu-repo/
+├── .github/
+│   └── workflows/
+│       └── build.yml
+└── www/
+    ├── index.html
+    ├── style.css
+    ├── app.js
+    ├── manifest.json
+    ├── sw.js
+    └── icons/
+        ├── icon-192.png
+        └── icon-512.png
+
+# Após o push em main:
+#   PWA   → https://SEU-USUARIO.github.io/seu-repo/
+
+# Após criar a tag v1.0.0:
+#   APK   → https://github.com/SEU-USUARIO/seu-repo/releases/download/v1.0.0/app-debug.apk
+
+# Fluxo:
+#   1. Push em main      → deploy-pwa roda (site no ar)
+#   2. Push em main      → build-apk roda (APK nos Artifacts)
+#   3. Criar tag v1.0.0  → APK anexado na Release (link HTTPS)
+#   4. Baixar APK pela Release (sem bloqueio do Chrome)`
+  }
+};
+
+let passoAtual = 1;
+
+function mudarPasso(num) {
+  passoAtual = num;
+  document.querySelectorAll('.btn-passo').forEach((b, i) => {
+    b.classList.toggle('ativo', (i + 1) === num);
+  });
+  document.getElementById('labDescricao').innerHTML = passosInfo[num].desc;
+  document.getElementById('labTituloCodigo').textContent = passosInfo[num].titulo;
+  document.getElementById('labCodigoPre').textContent = passosInfo[num].codigo;
+  const btn = document.getElementById('btnCopiarPasso');
+  btn.classList.remove('copiado');
+  btn.textContent = '📋 Copiar';
+}
+
+function copiarPassoAtual(btn) {
+  const texto = passosInfo[passoAtual].codigo;
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(texto).then(() => {
+      btn.classList.add('copiado');
+      btn.textContent = '✅ Copiado!';
+      setTimeout(() => {
+        btn.classList.remove('copiado');
+        btn.textContent = '📋 Copiar';
+      }, 1800);
+    }).catch(() => fallbackCopiar(texto, btn));
+  } else {
+    fallbackCopiar(texto, btn);
+  }
+}
+
+function fallbackCopiar(texto, btn) {
+  const ta = document.createElement('textarea');
+  ta.value = texto;
+  document.body.appendChild(ta);
+  ta.select();
+  try { document.execCommand('copy'); } catch(e){}
+  document.body.removeChild(ta);
+  btn.classList.add('copiado');
+  btn.textContent = '✅ Copiado!';
+  setTimeout(() => {
+    btn.classList.remove('copiado');
+    btn.textContent = '📋 Copiar';
+  }, 1800);
+}
+
+/* ============================================================
+   CRUD VIVO NO MOCKUP DO CELULAR
+   ============================================================ */
+let mockAlunos = [
+  { id: 1, nome: "Carlos Silva", idade: 22 },
+  { id: 2, nome: "Ana Souza", idade: 19 }
+];
+let mockProximoId = 3;
+const MOCK_CHAVE = "mock_alunos_database";
+
+function carregarMock() {
+  const salvo = localStorage.getItem(MOCK_CHAVE);
+  if (salvo) {
+    try {
+      mockAlunos = JSON.parse(salvo);
+      mockProximoId = mockAlunos.length ? Math.max(...mockAlunos.map(a => a.id)) + 1 : 1;
+    } catch (e) {}
+  }
+  renderMock();
+}
+
+function persistirMock() {
+  localStorage.setItem(MOCK_CHAVE, JSON.stringify(mockAlunos));
+}
+
+function mockSalvar() {
+  const n = document.getElementById('mockNome');
+  const e = document.getElementById('mockEmail');
+  const i = document.getElementById('mockIdade');
+
+  if (!n.value.trim()) {
+    alert("Digite o nome no celular!");
+    return;
+  }
+
+  mockAlunos.push({
+    id: mockProximoId++,
+    nome: n.value.trim(),
+    idade: i.value.trim() || "-"
+  });
+
+  n.value = e.value = i.value = "";
+  persistirMock();
+  renderMock();
+}
+
+function mockExcluir(id) {
+  mockAlunos = mockAlunos.filter(a => a.id !== id);
+  persistirMock();
+  renderMock();
+}
+
+function renderMock() {
+  const tbody = document.getElementById('mockLista');
+  tbody.innerHTML = "";
+  if (mockAlunos.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:#64748b;">Nenhum aluno</td></tr>';
+    return;
+  }
+  mockAlunos.forEach(a => {
+    const tr = document.createElement("tr");
+    const td1 = document.createElement("td"); td1.textContent = "#" + a.id;
+    const td2 = document.createElement("td"); td2.textContent = a.nome;
+    const td3 = document.createElement("td"); td3.textContent = a.idade;
+    const td4 = document.createElement("td");
+    const btn = document.createElement("button");
+    btn.className = "btn-del";
+    btn.textContent = "X";
+    btn.addEventListener("click", function () { mockExcluir(a.id); });
+    td4.appendChild(btn);
+    tr.appendChild(td1); tr.appendChild(td2); tr.appendChild(td3); tr.appendChild(td4);
+    tbody.appendChild(tr);
+  });
+}
+
+function instalarAppMockup() {
+  document.getElementById('pwaBanner').style.display = 'none';
+  alert("🎉 Aplicativo 'AlunosApp' instalado com sucesso na tela inicial do smartphone simulado!");
+}
+
+/* ============================================================
+   CORREÇÃO DO QUIZ
+   ============================================================ */
+const gabarito = {
+  q1: 'B', q2: 'B', q3: 'A', q4: 'B', q5: 'B',
+  q6: 'B', q7: 'A', q8: 'B', q9: 'B', q10: 'B',
+  q11: 'A', q12: 'B', q13: 'F', q14: 'V', q15: 'V',
+  q16: 'V', q17: 'V'
+};
+const TOTAL_QUESTOES = 17;
+
+function corrigirQuiz() {
+  let acertos = 0;
+  for (let id in gabarito) {
+    const sel = document.querySelector('input[name="' + id + '"]:checked');
+    const qDiv = document.getElementById(id);
+    if (!qDiv) continue;
+    const opts = qDiv.querySelectorAll('.option');
+
+    opts.forEach(function(opt) {
+      const r = opt.querySelector('input[type="radio"]');
+      if (r.value === gabarito[id]) opt.classList.add('correct');
+      else if (r.checked) opt.classList.add('wrong');
+      r.disabled = true;
+      opt.classList.add('disabled');
+    });
+
+    if (sel && sel.value === gabarito[id]) acertos++;
+  }
+
+  const perc = Math.round((acertos / TOTAL_QUESTOES) * 100);
+  document.getElementById('pontuacao').innerText = acertos + ' / ' + TOTAL_QUESTOES;
+  document.getElementById('txtPercentual').innerText = 'Aproveitamento: ' + perc + '%';
+
+  const res = document.getElementById('resultadoQuiz');
+  res.style.display = 'block';
+  res.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function limparQuiz() {
+  document.querySelectorAll('input[type="radio"]').forEach(function(r) {
+    r.checked = false; r.disabled = false;
+  });
+  document.querySelectorAll('.option').forEach(function(opt) {
+    opt.classList.remove('correct', 'wrong', 'disabled');
+  });
+  document.getElementById('resultadoQuiz').style.display = 'none';
+  document.getElementById('sec-quiz').scrollIntoView({ behavior: 'smooth' });
+}
+
+document.querySelectorAll('.option').forEach(function(opt) {
+  opt.addEventListener('click', function() {
+    if (this.classList.contains('disabled')) return;
+    const r = this.querySelector('input[type="radio"]');
+    if (r) r.checked = true;
+  });
+});
+
+/* ===== Inicialização ===== */
+document.addEventListener('DOMContentLoaded', function() {
+  mudarPasso(1);
+  carregarMock();
+});
+</script>
+
+
+</body></html>

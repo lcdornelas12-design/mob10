@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<!-- saved from url=(0048)https://almeida-cma.github.io/mob10/5-quizz.html -->
+<html lang="pt-BR"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>📝 Quiz de Fixação — Os Arquivos do AlunosApp</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #090d16 0%, #0f172a 50%, #082f49 100%);
+    padding: 20px 14px 90px;
+    min-height: 100vh;
+    color: #1e293b;
+  }
+  .container { max-width: 900px; margin: 0 auto; }
+
+  /* HEADER */
+  .header {
+    background: linear-gradient(135deg, #0284c7 0%, #7c3aed 100%);
+    border-radius: 20px;
+    padding: 30px 24px;
+    margin-bottom: 22px;
+    text-align: center;
+    color: #fff;
+    box-shadow: 0 10px 30px rgba(0,0,0,.35);
+  }
+  .header h1 { font-size: 1.8rem; margin-bottom: 8px; }
+  .header h1 span { color: #facc15; }
+  .header p { opacity: .95; font-size: .95rem; max-width: 720px; margin: 0 auto; line-height: 1.6; }
+
+  /* BARRA DE PROGRESSO */
+  .barra-progresso {
+    background: rgba(255,255,255,.15);
+    border-radius: 30px;
+    padding: 6px 14px;
+    margin-top: 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    max-width: 420px;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: .82rem;
+  }
+  .barra-progresso .trilha {
+    flex: 1;
+    height: 8px;
+    background: rgba(255,255,255,.25);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .barra-progresso .preenchido {
+    height: 100%;
+    background: #facc15;
+    width: 0%;
+    transition: width .3s;
+    border-radius: 10px;
+  }
+
+  /* CARD GERAL */
+  .card {
+    background: #fff;
+    border-radius: 18px;
+    padding: 24px;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 24px rgba(0,0,0,.1);
+  }
+  .card h2 {
+    color: #0369a1;
+    border-left: 5px solid #0284c7;
+    padding-left: 12px;
+    font-size: 1.15rem;
+    margin-bottom: 12px;
+  }
+  .card p { color: #334155; line-height: 1.7; font-size: .92rem; margin-bottom: 8px; }
+
+  /* QUESTÃO */
+  .question {
+    background: #fff;
+    border-radius: 14px;
+    padding: 20px 22px;
+    margin-bottom: 16px;
+    box-shadow: 0 6px 18px rgba(0,0,0,.08);
+    border-left: 5px solid #0284c7;
+    transition: .15s;
+  }
+  .question.tf { border-left-color: #8b5cf6; }
+  .question.acertou { border-left-color: #16a34a; background: #f0fdf4; }
+  .question.errou { border-left-color: #dc2626; background: #fef2f2; }
+
+  .question-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+  .question-number {
+    background: #0284c7;
+    color: #fff;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: .82rem;
+    font-weight: 800;
+    flex-shrink: 0;
+  }
+  .question.tf .question-number { background: #8b5cf6; }
+  .question.acertou .question-number { background: #16a34a; }
+  .question.errou .question-number { background: #dc2626; }
+
+  .question-texto {
+    flex: 1;
+    font-weight: 700;
+    color: #0f172a;
+    font-size: .95rem;
+    line-height: 1.5;
+  }
+  .question-texto code {
+    background: #e0f2fe;
+    color: #0369a1;
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-family: 'Consolas', monospace;
+    font-size: .85em;
+  }
+
+  /* OPÇÕES */
+  .options { display: flex; flex-direction: column; gap: 8px; }
+  .options.tf { display: grid; grid-template-columns: 1fr 1fr; max-width: 340px; }
+
+  .option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    background: #f8fafc;
+    border-radius: 10px;
+    border: 2px solid #e2e8f0;
+    cursor: pointer;
+    transition: all .15s;
+  }
+  .option:hover:not(.disabled) { border-color: #0284c7; background: #f0f9ff; }
+  .option input[type="radio"] {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    flex-shrink: 0;
+    accent-color: #0284c7;
+  }
+  .option label {
+    font-size: .88rem;
+    cursor: pointer;
+    flex: 1;
+    line-height: 1.45;
+    color: #334155;
+  }
+  .option.correct {
+    border-color: #16a34a !important;
+    background: #dcfce7 !important;
+  }
+  .option.correct label { color: #14532d; font-weight: 700; }
+  .option.wrong {
+    border-color: #dc2626 !important;
+    background: #fee2e2 !important;
+  }
+  .option.wrong label { color: #7f1d1d; font-weight: 700; }
+  .option.disabled { cursor: default; }
+
+  /* FEEDBACK DA QUESTÃO */
+  .feedback {
+    margin-top: 12px;
+    padding: 10px 14px;
+    border-radius: 10px;
+    font-size: .86rem;
+    line-height: 1.55;
+    display: none;
+  }
+  .feedback.show { display: block; }
+  .feedback.ok {
+    background: #dcfce7;
+    color: #14532d;
+    border-left: 4px solid #16a34a;
+  }
+  .feedback.nok {
+    background: #fee2e2;
+    color: #7f1d1d;
+    border-left: 4px solid #dc2626;
+  }
+  .feedback strong { font-weight: 800; }
+
+  /* BOTÕES */
+  .btn-grupo {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 24px;
+    flex-wrap: wrap;
+  }
+  .btn {
+    background: linear-gradient(135deg, #0284c7, #2563eb);
+    color: #fff;
+    border: none;
+    padding: 13px 28px;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: .95rem;
+    font-weight: 700;
+    transition: .15s;
+    font-family: inherit;
+    box-shadow: 0 4px 14px rgba(2,132,199,.3);
+  }
+  .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(2,132,199,.4); }
+  .btn:disabled { opacity: .5; cursor: not-allowed; transform: none; }
+  .btn-secondary {
+    background: linear-gradient(135deg, #64748b, #94a3b8);
+    box-shadow: 0 4px 14px rgba(100,116,139,.3);
+  }
+  .btn-secondary:hover { box-shadow: 0 8px 20px rgba(100,116,139,.4); }
+
+  /* RESULTADO FINAL */
+  .result-box {
+    background: #fff;
+    border-radius: 20px;
+    padding: 30px 24px;
+    text-align: center;
+    border: 4px solid #0284c7;
+    display: none;
+    margin-top: 24px;
+    box-shadow: 0 10px 30px rgba(0,0,0,.15);
+  }
+  .result-box.aprovado { border-color: #16a34a; background: #f0fdf4; }
+  .result-box.recuperacao { border-color: #f59e0b; background: #fffbeb; }
+  .result-box.reprovado { border-color: #dc2626; background: #fef2f2; }
+
+  .result-box h2 {
+    color: #0369a1;
+    border: none;
+    padding: 0;
+    font-size: 1.35rem;
+    margin-bottom: 12px;
+  }
+  .result-box.aprovado h2 { color: #15803d; }
+  .result-box.recuperacao h2 { color: #b45309; }
+  .result-box.reprovado h2 { color: #b91c1c; }
+
+  .score {
+    font-size: 3.4rem;
+    font-weight: 900;
+    color: #0369a1;
+    line-height: 1;
+    margin: 10px 0 6px;
+  }
+  .result-box.aprovado .score { color: #16a34a; }
+  .result-box.recuperacao .score { color: #f59e0b; }
+  .result-box.reprovado .score { color: #dc2626; }
+
+  .score small {
+    font-size: 1.3rem;
+    opacity: .6;
+    font-weight: 700;
+  }
+  .percentual {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #0c4a6e;
+    margin-bottom: 8px;
+  }
+  .mensagem {
+    font-size: .94rem;
+    color: #334155;
+    line-height: 1.65;
+    max-width: 560px;
+    margin: 0 auto;
+  }
+  .mensagem em { font-style: normal; font-weight: 700; }
+
+  .btn-top {
+    position: fixed; bottom: 20px; right: 20px;
+    background: #0284c7; color: #fff;
+    border: none; padding: 10px 18px;
+    border-radius: 50px; cursor: pointer;
+    font-size: 12px; font-weight: 700;
+    box-shadow: 0 4px 15px rgba(0,0,0,.25);
+    font-family: inherit; z-index: 100;
+  }
+
+  @media (max-width: 700px) {
+    .header h1 { font-size: 1.4rem; }
+    .question { padding: 16px 14px; }
+    .card { padding: 18px 14px; }
+    .options.tf { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container" id="inicio">
+
+  <header class="header">
+    <h1>📝 Quiz de Fixação — <span>Os Arquivos do AlunosApp</span></h1>
+    <p>15 questões objetivas sobre o papel de cada arquivo do projeto. Responda com calma, clique em <strong>Verificar Respostas</strong> no final e veja o gabarito comentado de cada questão.</p>
+    <div class="barra-progresso">
+      <span>Respondidas:</span>
+      <div class="trilha"><div class="preenchido" id="preenchido" style="width: 100%;"></div></div>
+      <span id="contador">15 / 15</span>
+    </div>
+  </header>
+
+  <form id="formQuiz">
+
+    <!-- ===== Q1 ===== -->
+    <div class="question acertou" id="q1">
+      <div class="question-header">
+        <div class="question-number">1</div>
+        <div class="question-texto">Qual arquivo é responsável por montar a <strong>estrutura visual</strong> da tela (título, campos, botões e tabela)?</div>
+      </div>
+      <div class="options">
+        <div class="option disabled"><input type="radio" name="q1" value="A" disabled=""><label>app.js</label></div>
+        <div class="option correct disabled"><input type="radio" name="q1" value="B" disabled=""><label>index.html</label></div>
+        <div class="option disabled"><input type="radio" name="q1" value="C" disabled=""><label>style.css</label></div>
+        <div class="option disabled"><input type="radio" name="q1" value="D" disabled=""><label>manifest.json</label></div>
+      </div>
+      <div class="feedback show ok" id="fb-q1"><strong>✅ Correto!</strong> O <code>index.html</code> é o esqueleto da tela. Ele contém os campos, o botão e a tabela — mas sem estilo (CSS) e sem lógica (JS).</div>
+    </div>
+
+    <!-- ===== Q2 ===== -->
+    <div class="question acertou" id="q2">
+      <div class="question-header">
+        <div class="question-number">2</div>
+        <div class="question-texto">Se o arquivo <code>app.js</code> estiver com erro ou faltando, o que acontece?</div>
+      </div>
+      <div class="options">
+        <div class="option disabled"><input type="radio" name="q2" value="A" disabled=""><label>O app abre em branco, sem nenhum elemento visível.</label></div>
+        <div class="option correct disabled"><input type="radio" name="q2" value="B" disabled=""><label>Os botões não funcionam; a tabela pode exibir os textos literais <code>${a.id}</code>.</label></div>
+        <div class="option disabled"><input type="radio" name="q2" value="C" disabled=""><label>O ícone do app desaparece da tela inicial.</label></div>
+        <div class="option disabled"><input type="radio" name="q2" value="D" disabled=""><label>O GitHub Pages deixa de publicar o site.</label></div>
+      </div>
+      <div class="feedback show ok" id="fb-q2"><strong>✅ Correto!</strong> Sem o <code>app.js</code>, ninguém escuta os cliques nem atualiza a tabela. O sintoma clássico é a tabela exibindo <code>${a.id}</code> literalmente.</div>
+    </div>
+
+    <!-- ===== Q3 ===== -->
+    <div class="question acertou" id="q3">
+      <div class="question-header">
+        <div class="question-number">3</div>
+        <div class="question-texto">Para que serve o arquivo <code>style.css</code>?</div>
+      </div>
+      <div class="options">
+        <div class="option disabled"><input type="radio" name="q3" value="A" disabled=""><label>Guardar os dados no LocalStorage.</label></div>
+        <div class="option correct disabled"><input type="radio" name="q3" value="B" disabled=""><label>Definir a aparência: cores, fontes, espaçamentos, bordas.</label></div>
+        <div class="option disabled"><input type="radio" name="q3" value="C" disabled=""><label>Permitir a instalação como PWA.</label></div>
+        <div class="option disabled"><input type="radio" name="q3" value="D" disabled=""><label>Compilar o APK do Android.</label></div>
+      </div>
+      <div class="feedback show ok" id="fb-q3"><strong>✅ Correto!</strong> O <code>style.css</code> cuida só da aparência. Sem ele, o app funciona, mas fica visualmente "cru", parecido com um site antigo.</div>
+    </div>
+
+    <!-- ===== Q4 ===== -->
+    <div class="question acertou" id="q4">
+      <div class="question-header">
+        <div class="question-number">4</div>
+        <div class="question-texto">O arquivo <code>manifest.json</code> é a "carteira de identidade" do PWA. O que ele contém?</div>
+      </div>
+      <div class="options">
+        <div class="option disabled"><input type="radio" name="q4" value="A" disabled=""><label>A lógica do CRUD em JavaScript.</label></div>
+        <div class="option correct disabled"><input type="radio" name="q4" value="B" disabled=""><label>Nome do app, nome curto, cor do tema e lista de ícones.</label></div>
+        <div class="option disabled"><input type="radio" name="q4" value="C" disabled=""><label>Os comandos do Capacitor para gerar o APK.</label></div>
+        <div class="option disabled"><input type="radio" name="q4" value="D" disabled=""><label>A folha de estilos escura do app.</label></div>
+      </div>
+      <div class="feedback show ok" id="fb-q4"><strong>✅ Correto!</strong> O <code>manifest.json</code> traz nome, nome curto, cores, ícones e o <code>display: standalone</code>, que faz o app abrir em tela cheia.</div>
+    </div>
+
+    <!-- ===== Q5 ===== -->
+    <div class="question acertou" id="q5">
+      <div class="question-header">
+        <div class="question-number">5</div>
+        <div class="question-texto">Se o <code>manifest.json</code> não existir, o que o usuário deixa de ver no Chrome Android?</div>
+      </div>
+      <div class="options">
+        <div class="option disabled"><input type="radio" name="q5" value="A" disabled=""><label>A tabela de alunos cadastrados.</label></div>
+        <div class="option correct disabled"><input type="radio" name="q5" value="B" disabled=""><label>O aviso "Adicionar à tela inicial".</label></div>
+        <div class="option disabled"><input type="radio" name="q5" value="C" disabled=""><label>O botão "Salvar Aluno".</label></div>
+        <div class="option disabled"><input type="radio" name="q5" value="D" disabled=""><label>O título da página.</label></div>
+      </div>
+      <div class="feedback show ok" id="fb-q5"><strong>✅ Correto!</strong> Sem o <code>manifest.json</code>, o Chrome não reconhece o site como PWA instalável e não oferece "Adicionar à tela inicial".</div>
+    </div>
+
+    <!-- ===== Q6 ===== -->
+    <div class="question acertou" id="q6">
+      <div class="question-header">
+        <div class="question-number">6</div>
+        <div class="question-texto">Qual arquivo faz o app funcionar <strong>offline</strong>, guardando cópia dos arquivos no cache do celular?</div>
+      </div>
+      <div class="options">
+        <div class="option disabled"><input type="radio" name="q6" value="A" disabled=""><label>index.html</label></div>
+        <div class="option correct disabled"><input type="radio" name="q6" value="B" disabled=""><label>sw.js (Service Worker)</label></div>
+        <div class="option disabled"><input type="radio" name="q6" value="C" disabled=""><label>build.yml</label></div>
+        <div class="option disabled"><input type="radio" name="q6" value="D" disabled=""><label>manifest.json</label></div>
+      </div>
+      <div class="feedback show ok" id="fb-q6"><strong>✅ Correto!</strong> O <code>sw.js</code> (Service Worker) guarda cópias dos arquivos no cache local e responde requisições mesmo sem internet.</div>
+    </div>
+
+    <!-- ===== Q7 ===== -->
+    <div class="question acertou" id="q7">
+      <div class="question-header">
+        <div class="question-number">7</div>
+        <div class="question-texto">Se o arquivo <code>sw.js</code> não existir, qual é a consequência mais visível?</div>
+      </div>
+      <div class="options">
+        <div class="option disabled"><input type="radio" name="q7" value="A" disabled=""><label>O app fica feio, sem cores.</label></div>
+        <div class="option correct disabled"><input type="radio" name="q7" value="B" disabled=""><label>O app não abre offline e o Chrome para de oferecer instalação.</label></div>
+        <div class="option disabled"><input type="radio" name="q7" value="C" disabled=""><label>O botão Excluir não funciona.</label></div>
+        <div class="option disabled"><input type="radio" name="q7" value="D" disabled=""><label>A tabela deixa de mostrar as idades.</label></div>
+      </div>
+      <div class="feedback show ok" id="fb-q7"><strong>✅ Correto!</strong> Sem o <code>sw.js</code>, o app não abre offline, o Chrome para de oferecer instalação e o site pode ficar preso em cache antigo.</div>
+    </div>
+
+    <!-- ===== Q8 ===== -->
+    <div class="question acertou" id="q8">
+      <div class="question-header">
+        <div class="question-number">8</div>
+        <div class="question-texto">Sobre os arquivos de ícone <code>icon-192.png</code> e <code>icon-512.png</code>, é correto afirmar que:</div>
+      </div>
+      <div class="options">
+        <div class="option disabled"><input type="radio" name="q8" value="A" disabled=""><label>Podem ser substituídos por arquivos .txt, pois o navegador ignora o formato.</label></div>
+        <div class="option correct disabled"><input type="radio" name="q8" value="B" disabled=""><label>Precisam ser PNG reais e existir nos tamanhos exatos que o <code>manifest.json</code> declara.</label></div>
+        <div class="option disabled"><input type="radio" name="q8" value="C" disabled=""><label>Devem ficar dentro da pasta <code>.github/workflows/</code>.</label></div>
+        <div class="option disabled"><input type="radio" name="q8" value="D" disabled=""><label>Substituem o papel do <code>index.html</code> como página inicial.</label></div>
+      </div>
+      <div class="feedback show ok" id="fb-q8"><strong>✅ Correto!</strong> Os ícones precisam ser PNG reais nos tamanhos 192×192 e 512×512 — os mesmos declarados no <code>manifest.json</code>. Sem eles, o PWA não instala.</div>
+    </div>
+
+    <!-- ===== Q9 ===== -->
+    <div class="question acertou" id="q9">
+      <div class="question-header">
+        <div class="question-number">9</div>
+        <div class="question-texto">O que o arquivo <code>build.yml</code> faz?</div>
+      </div>
+      <div class="options">
+        <div class="option disabled"><input type="radio" name="q9" value="A" disabled=""><label>Guarda os dados dos alunos no celular.</label></div>
+        <div class="option disabled"><input type="radio" name="q9" value="B" disabled=""><label>Define as cores e o layout do app.</label></div>
+        <div class="option correct disabled"><input type="radio" name="q9" value="C" disabled=""><label>Dá instruções ao GitHub Actions para publicar o site e gerar o APK automaticamente.</label></div>
+        <div class="option disabled"><input type="radio" name="q9" value="D" disabled=""><label>Registra o Service Worker no navegador.</label></div>
+      </div>
+      <div class="feedback show ok" id="fb-q9"><strong>✅ Correto!</strong> O <code>build.yml</code> é a "receita" que o GitHub Actions executa: publica o site no Pages e gera o APK com Capacitor.</div>
+    </div>
+
+    <!-- ===== Q10 ===== -->
+    <div class="question acertou" id="q10">
+      <div class="question-header">
+        <div class="question-number">10</div>
+        <div class="question-texto">Em qual caminho o <code>build.yml</code> deve estar para o GitHub reconhecê-lo?</div>
+      </div>
+      <div class="options">
+        <div class="option disabled"><input type="radio" name="q10" value="A" disabled=""><label>Na raiz do repositório, junto com o README.</label></div>
+        <div class="option disabled"><input type="radio" name="q10" value="B" disabled=""><label>Dentro de <code>www/</code>, ao lado do <code>app.js</code>.</label></div>
+        <div class="option correct disabled"><input type="radio" name="q10" value="C" disabled=""><label>Em <code>.github/workflows/build.yml</code>, exatamente com esse caminho.</label></div>
+        <div class="option disabled"><input type="radio" name="q10" value="D" disabled=""><label>Em qualquer pasta, desde que o nome do arquivo termine em .yml.</label></div>
+      </div>
+      <div class="feedback show ok" id="fb-q10"><strong>✅ Correto!</strong> O caminho exato é <code>.github/workflows/build.yml</code>. Qualquer variação (sem o ponto, sem o "s", com tab) faz o GitHub ignorar o workflow.</div>
+    </div>
+
+    <!-- ===== Q11 ===== -->
+    <div class="question acertou" id="q11">
+      <div class="question-header">
+        <div class="question-number">11</div>
+        <div class="question-texto">Por que o <code>build.yml</code> não pode ter tabulações (Tab), apenas espaços?</div>
+      </div>
+      <div class="options">
+        <div class="option disabled"><input type="radio" name="q11" value="A" disabled=""><label>Porque tabs ocupam muito espaço no arquivo.</label></div>
+        <div class="option correct disabled"><input type="radio" name="q11" value="B" disabled=""><label>Porque o formato YAML usa indentação como sintaxe e não aceita Tab — o GitHub ignora o workflow silenciosamente.</label></div>
+        <div class="option disabled"><input type="radio" name="q11" value="C" disabled=""><label>Porque o Windows transforma tabs em caracteres especiais.</label></div>
+        <div class="option disabled"><input type="radio" name="q11" value="D" disabled=""><label>Porque o Java não consegue ler tabs.</label></div>
+      </div>
+      <div class="feedback show ok" id="fb-q11"><strong>✅ Correto!</strong> YAML usa indentação como sintaxe. Tabs quebram a leitura e o arquivo é ignorado silenciosamente — sem aviso de erro.</div>
+    </div>
+
+    <!-- ===== Q12 ===== -->
+    <div class="question acertou" id="q12">
+      <div class="question-header">
+        <div class="question-number">12</div>
+        <div class="question-texto">Ao editar qualquer arquivo do app, por que é importante trocar <code>alunosapp-v1</code> para <code>alunosapp-v2</code> dentro do <code>sw.js</code>?</div>
+      </div>
+      <div class="options">
+        <div class="option disabled"><input type="radio" name="q12" value="A" disabled=""><label>Para o app ficar mais rápido.</label></div>
+        <div class="option correct disabled"><input type="radio" name="q12" value="B" disabled=""><label>Para o Service Worker descartar o cache antigo e baixar a versão nova — senão o celular continua mostrando a versão velha.</label></div>
+        <div class="option disabled"><input type="radio" name="q12" value="C" disabled=""><label>Para o APK ficar menor.</label></div>
+        <div class="option disabled"><input type="radio" name="q12" value="D" disabled=""><label>Porque o GitHub não aceita dois commits com o mesmo texto.</label></div>
+      </div>
+      <div class="feedback show ok" id="fb-q12"><strong>✅ Correto!</strong> A versão no <code>sw.js</code> força o Service Worker a descartar o cache antigo e buscar os arquivos novos. Sem isso, o celular continua com a versão antiga.</div>
+    </div>
+
+    <!-- ===== Q13 (V/F) ===== -->
+    <div class="question tf acertou" id="q13">
+      <div class="question-header">
+        <div class="question-number">13</div>
+        <div class="question-texto">O mesmo arquivo <code>index.html</code> é usado tanto para o site publicado no GitHub Pages quanto para o app dentro do APK Android.</div>
+      </div>
+      <div class="options tf">
+        <div class="option correct disabled"><input type="radio" name="q13" value="V" disabled=""><label>✅ Verdadeiro</label></div>
+        <div class="option disabled"><input type="radio" name="q13" value="F" disabled=""><label>❌ Falso</label></div>
+      </div>
+      <div class="feedback show ok" id="fb-q13"><strong>✅ Correto!</strong> O mesmo código HTML é publicado no Pages como PWA e empacotado no APK pelo Capacitor. Isso é o que permite manter uma única base de código.</div>
+    </div>
+
+    <!-- ===== Q14 (V/F) ===== -->
+    <div class="question tf acertou" id="q14">
+      <div class="question-header">
+        <div class="question-number">14</div>
+        <div class="question-texto">O arquivo <code>app.js</code> é executado tanto no navegador (PWA) quanto dentro do WebView do APK, pois ambos têm motor JavaScript.</div>
+      </div>
+      <div class="options tf">
+        <div class="option correct disabled"><input type="radio" name="q14" value="V" disabled=""><label>✅ Verdadeiro</label></div>
+        <div class="option disabled"><input type="radio" name="q14" value="F" disabled=""><label>❌ Falso</label></div>
+      </div>
+      <div class="feedback show ok" id="fb-q14"><strong>✅ Correto!</strong> Tanto o navegador quanto o WebView do Android têm um motor JavaScript. Por isso o <code>app.js</code> funciona idêntico nos dois ambientes.</div>
+    </div>
+
+    <!-- ===== Q15 (V/F) ===== -->
+    <div class="question tf acertou" id="q15">
+      <div class="question-header">
+        <div class="question-number">15</div>
+        <div class="question-texto">Se um único arquivo dos 7 (por exemplo, o <code>sw.js</code>) estiver faltando, o app pode até abrir, mas ficará com alguma funcionalidade comprometida.</div>
+      </div>
+      <div class="options tf">
+        <div class="option correct disabled"><input type="radio" name="q15" value="V" disabled=""><label>✅ Verdadeiro</label></div>
+        <div class="option disabled"><input type="radio" name="q15" value="F" disabled=""><label>❌ Falso</label></div>
+      </div>
+      <div class="feedback show ok" id="fb-q15"><strong>✅ Correto!</strong> Cada arquivo cobre uma parte específica. Se algum faltar, o app até pode abrir, mas perde uma funcionalidade — offline, instalação, aparência ou lógica.</div>
+    </div>
+
+    <!-- ===== BOTÕES ===== -->
+    <div class="btn-grupo">
+      <button type="button" class="btn" onclick="corrigirQuiz()">✅ Verificar Respostas</button>
+      <button type="button" class="btn btn-secondary" onclick="limparQuiz()">🔄 Limpar Respostas</button>
+    </div>
+
+  </form>
+
+  <!-- ===== RESULTADO FINAL ===== -->
+  <div class="result-box aprovado" id="resultadoQuiz" style="display: block;">
+    <h2>📊 Resultado Final</h2>
+    <div class="score" id="pontuacao">15<small>/15</small></div>
+    <div class="percentual" id="txtPercentual">Aproveitamento: 100%</div>
+    <p class="mensagem" id="mensagemFinal">🎉 <em>Excelente!</em> Você domina o papel de cada arquivo do projeto. Está pronto para aplicar em novos apps.</p>
+  </div>
+
+</div>
+
+<button class="btn-top" onclick="document.getElementById('inicio').scrollIntoView({behavior:'smooth'})">⬆️ Topo</button>
+
+<script>
+  /* ============================================
+     GABARITO E EXPLICAÇÕES
+     ============================================ */
+  const gabarito = {
+    q1:  'B',
+    q2:  'B',
+    q3:  'B',
+    q4:  'B',
+    q5:  'B',
+    q6:  'B',
+    q7:  'B',
+    q8:  'B',
+    q9:  'C',
+    q10: 'C',
+    q11: 'B',
+    q12: 'B',
+    q13: 'V',
+    q14: 'V',
+    q15: 'V'
+  };
+
+  const explicacoes = {
+    q1:  'O <code>index.html</code> é o esqueleto da tela. Ele contém os campos, o botão e a tabela — mas sem estilo (CSS) e sem lógica (JS).',
+    q2:  'Sem o <code>app.js</code>, ninguém escuta os cliques nem atualiza a tabela. O sintoma clássico é a tabela exibindo <code>${a.id}</code> literalmente.',
+    q3:  'O <code>style.css</code> cuida só da aparência. Sem ele, o app funciona, mas fica visualmente "cru", parecido com um site antigo.',
+    q4:  'O <code>manifest.json</code> traz nome, nome curto, cores, ícones e o <code>display: standalone</code>, que faz o app abrir em tela cheia.',
+    q5:  'Sem o <code>manifest.json</code>, o Chrome não reconhece o site como PWA instalável e não oferece "Adicionar à tela inicial".',
+    q6:  'O <code>sw.js</code> (Service Worker) guarda cópias dos arquivos no cache local e responde requisições mesmo sem internet.',
+    q7:  'Sem o <code>sw.js</code>, o app não abre offline, o Chrome para de oferecer instalação e o site pode ficar preso em cache antigo.',
+    q8:  'Os ícones precisam ser PNG reais nos tamanhos 192×192 e 512×512 — os mesmos declarados no <code>manifest.json</code>. Sem eles, o PWA não instala.',
+    q9:  'O <code>build.yml</code> é a "receita" que o GitHub Actions executa: publica o site no Pages e gera o APK com Capacitor.',
+    q10: 'O caminho exato é <code>.github/workflows/build.yml</code>. Qualquer variação (sem o ponto, sem o "s", com tab) faz o GitHub ignorar o workflow.',
+    q11: 'YAML usa indentação como sintaxe. Tabs quebram a leitura e o arquivo é ignorado silenciosamente — sem aviso de erro.',
+    q12: 'A versão no <code>sw.js</code> força o Service Worker a descartar o cache antigo e buscar os arquivos novos. Sem isso, o celular continua com a versão antiga.',
+    q13: 'O mesmo código HTML é publicado no Pages como PWA e empacotado no APK pelo Capacitor. Isso é o que permite manter uma única base de código.',
+    q14: 'Tanto o navegador quanto o WebView do Android têm um motor JavaScript. Por isso o <code>app.js</code> funciona idêntico nos dois ambientes.',
+    q15: 'Cada arquivo cobre uma parte específica. Se algum faltar, o app até pode abrir, mas perde uma funcionalidade — offline, instalação, aparência ou lógica.'
+  };
+
+  const TOTAL = Object.keys(gabarito).length;
+
+  /* ============================================
+     CONTAGEM DE RESPONDIDAS
+     ============================================ */
+  function atualizarContagem() {
+    let respondidas = 0;
+    for (let id in gabarito) {
+      if (document.querySelector('input[name="' + id + '"]:checked')) respondidas++;
+    }
+    const pct = (respondidas / TOTAL) * 100;
+    document.getElementById('preenchido').style.width = pct + '%';
+    document.getElementById('contador').textContent = respondidas + ' / ' + TOTAL;
+  }
+
+  document.querySelectorAll('input[type="radio"]').forEach(r => {
+    r.addEventListener('change', atualizarContagem);
+  });
+
+  /* ============================================
+     CLICAR NA OPÇÃO SELECIONA O RADIO
+     ============================================ */
+  document.querySelectorAll('.option').forEach(opt => {
+    opt.addEventListener('click', function() {
+      if (this.classList.contains('disabled')) return;
+      const r = this.querySelector('input[type="radio"]');
+      if (r) {
+        r.checked = true;
+        atualizarContagem();
+      }
+    });
+  });
+
+  /* ============================================
+     CORRIGIR QUIZ
+     ============================================ */
+  function corrigirQuiz() {
+    let acertos = 0;
+
+    for (let id in gabarito) {
+      const qDiv   = document.getElementById(id);
+      const sel    = document.querySelector('input[name="' + id + '"]:checked');
+      const opts   = qDiv.querySelectorAll('.option');
+      const fb     = document.getElementById('fb-' + id);
+      const acertou = sel && sel.value === gabarito[id];
+
+      if (acertou) acertos++;
+
+      qDiv.classList.remove('acertou', 'errou');
+      qDiv.classList.add(acertou ? 'acertou' : 'errou');
+
+      opts.forEach(opt => {
+        const r = opt.querySelector('input[type="radio"]');
+        if (r.value === gabarito[id]) opt.classList.add('correct');
+        else if (r.checked) opt.classList.add('wrong');
+        r.disabled = true;
+        opt.classList.add('disabled');
+      });
+
+      // Feedback textual
+      if (acertou) {
+        fb.className = 'feedback show ok';
+        fb.innerHTML = '<strong>✅ Correto!</strong> ' + explicacoes[id];
+      } else {
+        const marcou = sel ? 'Você marcou <strong>' + sel.value + '</strong>.' : 'Você não respondeu.';
+        fb.className = 'feedback show nok';
+        fb.innerHTML = '<strong>❌ Incorreto.</strong> ' + marcou + ' Resposta certa: <strong>' + gabarito[id] + '</strong>. ' + explicacoes[id];
+      }
+    }
+
+    // Resultado final
+    const perc = Math.round((acertos / TOTAL) * 100);
+    const box  = document.getElementById('resultadoQuiz');
+    const msg  = document.getElementById('mensagemFinal');
+
+    document.getElementById('pontuacao').innerHTML = acertos + '<small>/' + TOTAL + '</small>';
+    document.getElementById('txtPercentual').textContent = 'Aproveitamento: ' + perc + '%';
+
+    box.classList.remove('aprovado', 'recuperacao', 'reprovado');
+
+    if (perc >= 80) {
+      box.classList.add('aprovado');
+      msg.innerHTML = '🎉 <em>Excelente!</em> Você domina o papel de cada arquivo do projeto. Está pronto para aplicar em novos apps.';
+    } else if (perc >= 60) {
+      box.classList.add('recuperacao');
+      msg.innerHTML = '📖 <em>Bom caminho!</em> Reveja as questões em vermelho e releia o Guia dos Arquivos para fixar os detalhes.';
+    } else {
+      box.classList.add('reprovado');
+      msg.innerHTML = '🔁 <em>Hora de revisar.</em> Volte ao Guia dos Arquivos, leia com calma as analogias e refaça o quiz.';
+    }
+
+    box.style.display = 'block';
+    box.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  /* ============================================
+     LIMPAR QUIZ
+     ============================================ */
+  function limparQuiz() {
+    document.querySelectorAll('input[type="radio"]').forEach(r => {
+      r.checked = false;
+      r.disabled = false;
+    });
+    document.querySelectorAll('.option').forEach(opt => {
+      opt.classList.remove('correct', 'wrong', 'disabled');
+    });
+    document.querySelectorAll('.question').forEach(q => {
+      q.classList.remove('acertou', 'errou');
+    });
+    document.querySelectorAll('.feedback').forEach(f => {
+      f.className = 'feedback';
+      f.innerHTML = '';
+    });
+    document.getElementById('resultadoQuiz').style.display = 'none';
+
+    atualizarContagem();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+
+
+</body></html>
